@@ -1,6 +1,16 @@
 $(document).ready(function() {
 
-  function getRandomStartSymbol(){
+
+  function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+};
+
+  function getRandomStart(){
       var rand = (Math.floor((Math.random() * 10) + 1));
       if (rand % 2 === 0){
         return [1,0];
@@ -10,6 +20,11 @@ $(document).ready(function() {
       };
     };
 
+  function upDateInstructions(string, delay){
+    $("#instructions").text(string);
+    sleep(delay);
+    return true;
+  };
 
   function person(name, symbol, image, side) {
       this.game = [0,0,0,0,0,0,0,0,0];
@@ -58,7 +73,6 @@ $(document).ready(function() {
   function addHeaderBoard(player1, player2){
       name1 = player1.getName();
       name2 = player2.getName();
-      alert(name1+" "+name2);
       $("h2#player1").text(name1);
       $("h2#player2").text(name2);
       $("#left").append("<h3 id=totalL value=0>0 wins</h3>");
@@ -81,8 +95,6 @@ $(document).ready(function() {
   };
 
   function resetGame(player1, player2){
-    // alert(player1.getName()+" "+player1.getSymbol());
-    //remove images
     $('.cell>img').remove();
     $('td').off();
     $('div').prop('disabled',false);
@@ -127,15 +139,22 @@ $(document).ready(function() {
     player.addToArray(number);
     if (player.checkGame()){
       alert(myName+" wins this one!");
+      upDateInstructions(myName+"won the last round!", 0);
       addToScoreBoard(player);
-      if (confirm("would you like to play again?"));
+      if(confirm("Would you like to play again?")){
         // alert("yes");
         return true;
+      }
+      else{
+        upDateInstructions(myName+"Game Over", 0);
+        return false;
+      };
     }
     else{
         return false;
     };
-  }
+  };
+
 
   function playGame(player1, player2){
       $('.cell>img').remove();
@@ -151,8 +170,8 @@ $(document).ready(function() {
           }
           else{
             if (checkStalemate(player1, player2)){
-              alert("stalemate!");
-              if(confirm("play again?")){
+              upDateInstructions("Last round was a STALEMATE", 0);
+              if(confirm("Stalemate. Would you like to play again?")){
                 resetGame(player2, player1);
               };
             };
@@ -164,8 +183,8 @@ $(document).ready(function() {
           }
           else{
             if (checkStalemate(player2, player2)){
-              alert("stalemate!");
-              if(confirm("play again?")){
+              upDateInstructions("Last round was a STALEMATE", 0);
+              if(confirm("Stalemate. Would you like to play again?")){
                 resetGame(player1, player2);
               };
           };
@@ -183,15 +202,32 @@ $(document).ready(function() {
 
   $("#start").click(function (event){
     var myImages = ["o-icon.png", "x-icon.png"]
-    var symbols = (getRandomStartSymbol());
+    var symbols = (getRandomStart());
+    var playorder = (getRandomStart());
 
+    upDateInstructions("Let's find out who is playing today!", 600);
     //get two names
-    var name1 = prompt("Please enter the first players name");
-    var name2 = prompt("Please enter the first players name");
     $(this).off();
+    var name1 = prompt("Please enter the first players name");
+    var name2 = prompt("Please enter the second players name");
 
-    var player1 = new person(name1, symbols[0], myImages[symbols[0]], 1);
-    var player2 = new person(name2, symbols[1], myImages[symbols[1]], 0);
+    upDateInstructions("I'm tossing a coin to see who goes first!", 600)
+
+    if (playorder[0] === 1){
+      var player1 = new person(name1, symbols[0], myImages[symbols[0]], 1);
+      var player2 = new person(name2, symbols[1], myImages[symbols[1]], 0);
+    }
+    else{
+      var player1 = new person(name2, symbols[0], myImages[symbols[0]], 1);
+      var player2 = new person(name1, symbols[1], myImages[symbols[1]], 0);
+    };
+
+    var firstsymbol = symbols[0];
+    if (firstsymbol === 1){ firstsymbol = "X"}
+    else{firstsymbol = "0"};
+
+    upDateInstructions(player1.getName()+" will play first with "+firstsymbol, 0);
+
     addHeaderBoard(player1, player2);
     playGame(player1, player2);
     $("#reset").click(function (event){
