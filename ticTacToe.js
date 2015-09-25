@@ -139,7 +139,7 @@ $(document).ready(function() {
     player.addToArray(number);
     if (player.checkGame()){
       alert(myName+" wins this one!");
-      upDateInstructions(myName+"won the last round!", 0);
+      upDateInstructions(myName+" won the last round!", 0);
       addToScoreBoard(player);
       if(confirm("Would you like to play again?")){
         // alert("yes");
@@ -179,13 +179,13 @@ $(document).ready(function() {
         }
         else{
           if(onePlay(player2, cellNum, this.id)){
-            resetGame(player1, player2);
+            resetGame(player2, player1);
           }
           else{
             if (checkStalemate(player2, player2)){
               upDateInstructions("Last round was a STALEMATE", 0);
               if(confirm("Stalemate. Would you like to play again?")){
-                resetGame(player1, player2);
+                resetGame(player2, player1);
               };
           };
         };
