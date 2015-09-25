@@ -1,0 +1,70 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="jquery-2.1.4.js"></script>
+<script src="ticTacToe.js"></script>
+<link href="ticTacToe.css" type="text/css" rel="stylesheet">
+<title>Tic Tac Toe</title>
+
+</head>
+
+
+
+  <body>
+    <container>
+        <row>
+          <div id="header" class="col-md-12">
+            <h2>explanations here</h2>
+              <input type="button" value="Input Button" id="start"></input>
+          </div>
+        </row>
+
+        <row>
+            <div id="left" class = "main side col-md-2">
+              <h2 id="player1">Player 1</h2>
+            </div>
+
+            <div id="table_div" class = "col-md-8 main">
+                  <table class="grid">
+                    <tr>
+                      <td id= "field0" class="cell">
+                        </td>
+                      <td id="field1" class="cell">
+                      </td>
+                      <td id="field2" class="cell">
+                    </tr>
+                    <tr>
+                      <td id="field3" class="cell">
+                      </td>
+                      <td id="field4" class="cell">
+                      </td>
+                      <td id ="field5" class="cell">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td id="field6" class="cell">
+                      </td>
+                      <td id="field7" class="cell">
+                      </td>
+                      <td id="field8" class="cell">
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              <div class="main side col-md-2" id ="right">
+                <h2 id="player2">Player 2</h2>
+              </div>
+        </row>
+        <row>
+          <div id="footer" class="vertical col-md-12">
+            <input type="button" value="reset" id="reset"></input>
+          </div>
+      </row>
+    </container>
+  </body>
+
+
+</html>

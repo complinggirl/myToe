@@ -1,0 +1,46 @@
+
+
+body {
+    background-color: #b0c4de;
+}
+
+#header{
+  height: 90px;
+  background-color: blue;
+  text-align: center;
+}
+
+#table_div{
+  background-color: black;
+  border: black solid 2px;
+}
+
+.side{
+  border-color: red;
+  text-align: center;
+}
+
+
+#footer{
+  height: 75px;
+  background-color: blue;
+  text-align: center;
+}
+
+table{
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
+
+}
+.cell{
+  width: 150px;
+  height: 150px;
+  border: 2px solid white;
+  color: white;
+}
+
+/*
+.grid{
+  height: auto;
+  width: auto;
+}
+/*border-width: 50%;*/
