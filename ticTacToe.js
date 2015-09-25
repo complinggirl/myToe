@@ -1,14 +1,6 @@
 $(document).ready(function() {
 
 
-  function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-};
 
   function getRandomStart(){
       var rand = (Math.floor((Math.random() * 10) + 1));
@@ -20,9 +12,8 @@ $(document).ready(function() {
       };
     };
 
-  function upDateInstructions(string, delay){
+  function upDateInstructions(string){
     $("#instructions").text(string);
-    sleep(delay);
     return true;
   };
 
@@ -139,14 +130,14 @@ $(document).ready(function() {
     player.addToArray(number);
     if (player.checkGame()){
       alert(myName+" wins this one!");
-      upDateInstructions(myName+" won the last round!", 0);
+      upDateInstructions(myName+" won the last round!");
       addToScoreBoard(player);
       if(confirm("Would you like to play again?")){
         // alert("yes");
         return true;
       }
       else{
-        upDateInstructions(myName+"Game Over", 0);
+        upDateInstructions(myName+"Game Over");
         return false;
       };
     }
@@ -157,6 +148,14 @@ $(document).ready(function() {
 
 
   function playGame(player1, player2){
+      var myToken;
+      if (player1.getSymbol === 1){
+        myToken = "X"
+      }
+      else{
+        myToken = "O"
+      };
+      upDateInstructions(player1.getName()+" plays first");
       $('.cell>img').remove();
       $('div').prop('disabled',false);
       player1.resetArray();
@@ -170,7 +169,7 @@ $(document).ready(function() {
           }
           else{
             if (checkStalemate(player1, player2)){
-              upDateInstructions("Last round was a STALEMATE", 0);
+              upDateInstructions("Last round was a STALEMATE");
               if(confirm("Stalemate. Would you like to play again?")){
                 resetGame(player2, player1);
               };
@@ -183,7 +182,7 @@ $(document).ready(function() {
           }
           else{
             if (checkStalemate(player2, player2)){
-              upDateInstructions("Last round was a STALEMATE", 0);
+              upDateInstructions("Last round was a STALEMATE");
               if(confirm("Stalemate. Would you like to play again?")){
                 resetGame(player2, player1);
               };
@@ -205,13 +204,13 @@ $(document).ready(function() {
     var symbols = (getRandomStart());
     var playorder = (getRandomStart());
 
-    upDateInstructions("Let's find out who is playing today!", 600);
+    upDateInstructions("Let's find out who is playing today!");
     //get two names
     $(this).off();
     var name1 = prompt("Please enter the first players name");
     var name2 = prompt("Please enter the second players name");
 
-    upDateInstructions("I'm tossing a coin to see who goes first!", 600)
+    upDateInstructions("I'm tossing a coin to see who goes first!")
 
     if (playorder[0] === 1){
       var player1 = new person(name1, symbols[0], myImages[symbols[0]], 1);
@@ -226,7 +225,7 @@ $(document).ready(function() {
     if (firstsymbol === 1){ firstsymbol = "X"}
     else{firstsymbol = "0"};
 
-    upDateInstructions(player1.getName()+" will play first with "+firstsymbol, 0);
+    upDateInstructions(player1.getName()+" will play first with "+firstsymbol);
 
     addHeaderBoard(player1, player2);
     playGame(player1, player2);
