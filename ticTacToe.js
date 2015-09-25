@@ -36,6 +36,10 @@ $(document).ready(function() {
       this.getSide=function(){
         return side;
       };
+      this.getArray=function(){
+        var tempArray = this.game;
+        return tempArray;
+      };
       this.checkGame=function(){
         if((this.game[0]+this.game[1]+this.game[2]===3)
         ||(this.game[3]+this.game[4]+this.game[5]===3)
@@ -74,12 +78,10 @@ $(document).ready(function() {
       var totalWins = (parseInt($("#totalR").text()));
       $("#totalR").text((totalWins+1)+" wins");
     };
-      // $("ul#"+name).append('<li>Win!</li>');
-      // $('.cell>img').remove();
   };
 
   function resetGame(player1, player2){
-    alert(player1.getName()+" "+player1.getSymbol());
+    // alert(player1.getName()+" "+player1.getSymbol());
     //remove images
     $('.cell>img').remove();
     $('td').off();
@@ -89,6 +91,33 @@ $(document).ready(function() {
     playGame(player1, player2);
   };
 
+  function checkStalemate(player1, player2){
+      var counter = 0;
+      var a = player1.getArray();
+      var b = player2.getArray();
+      if ($.inArray(1, [b[0], b[1], b[2]]) > -1 && $.inArray(1, [a[0], a[1], a[2]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[3], b[4], b[5]]) > -1 && $.inArray(1, [a[3], a[4], a[5]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[6], b[7], b[8]]) > -1 && $.inArray(1, [a[6], a[7], a[8]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[0], b[3], b[6]]) > -1 && $.inArray(1, [a[0], a[3], a[6]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[1], b[4], b[7]]) > -1 && $.inArray(1, [a[1], a[4], a[7]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[2], b[5], b[8]]) > -1 && $.inArray(1, [a[2], a[5], a[8]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[0], b[4], b[8]]) > -1 && $.inArray(1, [a[0], a[4], a[8]]) > -1){
+      counter++};
+      if ($.inArray(1, [b[2], b[4], b[6]]) > -1 && $.inArray(1, [a[2], a[4], a[6]]) > -1){
+      counter++};
+      if (counter === 8){
+        return true;
+      }
+      else{
+        return false;
+      };
+  };
 
   function onePlay(player, number, id){
     var myName = player.getName();
@@ -109,21 +138,19 @@ $(document).ready(function() {
   }
 
   function playGame(player1, player2){
-      var moveCounter=0;
       $('.cell>img').remove();
       $('div').prop('disabled',false);
       player1.resetArray();
       player2.resetArray();
       var myTurn=true;
       $(".cell").click(function (event){
-        moveCounter++;
         var cellNum = clean(this.id);
         if (myTurn){
           if (onePlay(player1, cellNum, this.id)){
             resetGame(player2, player1);
           }
           else{
-            if (moveCounter===9){
+            if (checkStalemate(player1, player2)){
               alert("stalemate!");
               if(confirm("play again?")){
                 resetGame(player2, player1);
@@ -136,7 +163,7 @@ $(document).ready(function() {
             resetGame(player1, player2);
           }
           else{
-            if (moveCounter===9){
+            if (checkStalemate(player2, player2)){
               alert("stalemate!");
               if(confirm("play again?")){
                 resetGame(player1, player2);
